@@ -1,0 +1,65 @@
+[
+    {
+        "name": "Wooden Carved Mask",
+        "title": "Traditional Nepali Mask",
+        "category": "decor-item",
+        "price": 1200,
+        "description": "Hand-carved wooden mask used in traditional dances and festivals in Nepal.",
+        "material": "Wood",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Nepali_mask.jpg"
+    },
+    {
+        "name": "Thangka Painting",
+        "title": "Buddhist Thangka Artwork",
+        "category": "artwork",
+        "price": 3500,
+        "description": "A hand-painted Thangka depicting Buddhist deities, perfect for home decor and meditation.",
+        "material": "Canvas & Mineral Pigments",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/5/52/Thangka_of_Buddha.jpg"
+    },
+    {
+        "name": "Pashmina Shawl",
+        "title": "Handwoven Pashmina",
+        "category": "clothing",
+        "price": 5000,
+        "description": "Soft and warm handwoven pashmina shawl made in the Himalayan regions of Nepal.",
+        "material": "Pashmina Wool",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/7/74/Pashmina_shawl.jpg"
+    },
+    {
+        "name": "Pottery Set",
+        "title": "Bhaktapur Clay Pot Set",
+        "category": "decor-item",
+        "price": 1800,
+        "description": "Traditional clay pots handcrafted in Bhaktapur, showcasing the heritage of Nepali pottery.",
+        "material": "Clay",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Bhaktapur_pottery.jpg"
+    },
+    {
+        "name": "Singing Bowl",
+        "title": "Tibetan Singing Bowl",
+        "category": "spiritual-item",
+        "price": 2200,
+        "description": "Handcrafted brass singing bowl used for meditation and spiritual practices.",
+        "material": "Brass",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/9/95/Singing_bowl.jpg"
+    },
+    {
+        "name": "Dhaka Topi",
+        "title": "Nepali Traditional Hat",
+        "category": "clothing",
+        "price": 800,
+        "description": "Iconic Nepali Dhaka topi made from traditional Dhaka fabric, a symbol of Nepali identity.",
+        "material": "Cotton",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Dhaka_topi.jpg"
+    },
+    {
+        "name": "Handmade Paper Lamp",
+        "title": "Lokta Paper Lamp",
+        "category": "decor-item",
+        "price": 1500,
+        "description": "Eco-friendly lamp made from traditional Lokta paper, handmade in Nepal.",
+        "material": "Lokta Paper",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Lokta_paper_lamp.jpg"
+    }
+]

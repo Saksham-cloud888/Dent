@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Checkout</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f8f9fa;
+        padding: 2rem;
+        text-align: center;
+      }
+      #userInfo {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        display: inline-block;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      button {
+        background: #1ba548;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+      button:hover {
+        background: #178a3d;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Checkout</h1>
+    <div id="userInfo"></div>
+    <div id="action"></div>
+
+    <script>
+      // Load user info from sessionStorage
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      const cart =
+        JSON.parse(sessionStorage.getItem(`cart_${user?._id}`)) || [];
+
+      const userInfoDiv = document.getElementById("userInfo");
+      const actionDiv = document.getElementById("action");
+
+      if (!user) {
+        // User not logged in
+        userInfoDiv.innerHTML = `<h3>Please login to continue checkout.</h3>`;
+        actionDiv.innerHTML = `<a href="/login.html">Go to Login</a>`;
+      } else {
+        // Calculate total amount from cart
+        const totalAmount = cart.reduce(
+          (sum, item) => sum + item.price * (item.quantity || 1),
+          0
+        );
+
+        // Show user info
+        userInfoDiv.innerHTML = `
+          <h3>User Information</h3>
+          <p><strong>Name:</strong> ${user.name}</p>
+          <p><strong>Email:</strong> ${user.email}</p>
+          <p><strong>Total Amount:</strong> रु${totalAmount}</p>
+        `;
+
+        // Add pay button
+        actionDiv.innerHTML = `<button onclick="pay(${totalAmount}, '${user._id}')">Pay with eSewa</button>`;
+      }
+
+      // eSewa Payment
+      function pay(amount, userId) {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "https://rc-epay.esewa.com.np/api/epay/main/v2/form"; // sandbox/test URL
+        form.target = "_self";
+
+        // form.innerHTML = `
+        //   <input name="tAmt" value="${amount}" />
+        //   <input name="amt" value="${amount}" />
+        //   <input name="txAmt" value="0" />
+        //   <input name="psc" value="0" />
+        //   <input name="pdc" value="0" />
+        //   <input name="scd" value="EPAYTEST" />
+        //   <input name="pid" value="${userId}" />
+        //   <input name="su" value="http://localhost:3000/payment-success.html" />
+        //   <input name="fu" value="http://localhost:3000/payment-fail.html" />
+        // `;
+
+        form.innerHTML = `
+          <input type="text" id="amount" name="amount" value=${amount} required>
+          <input type="text" id="tax_amount" name="tax_amount" value ="10" required>
+          <input type="text" id="total_amount" name="total_amount" value=${
+            amount + 10
+          } required>
+          <input type="text" id="transaction_uuid" name=${userId} value="241028" required>
+          <input type="text" id="product_code" name="product_code" value ="EPAYTEST" required>
+          <input type="text" id="product_service_charge" name="product_service_charge" value="0" required>
+          <input type="text" id="product_delivery_charge" name="product_delivery_charge" value="0" required>
+          <input type="text" id="success_url" name="success_url" value="https://developer.esewa.com.np/success" required>
+          <input type="text" id="failure_url" name="failure_url" value="https://developer.esewa.com.np/failure" required>
+        `;
+
+        document.body.appendChild(form);
+        form.submit();
+      }
+    </script>
+  </body>
+</html>
