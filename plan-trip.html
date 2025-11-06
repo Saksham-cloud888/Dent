@@ -76,7 +76,10 @@
       <div class="alert-container" id="alertContainer"></div>
 
       <!-- User Trips Section -->
-      <div class="d-flex justify-content-between align-items-center mb-3">
+      <div
+        id="userTop"
+        class="d-flex justify-content-between align-items-center mb-3"
+      >
         <h2>My Available Trips</h2>
         <button
           class="btn btn-primary"
@@ -179,6 +182,15 @@
         window.location.href = "login.html";
       }
 
+      // Hide user-only sections if admin
+      if (user.role === "admin") {
+        document.querySelector("h2").closest("div").style.display = "none"; // hides "My Available Trips" + Add button
+        document.getElementById("tripTable").style.display = "none"; // hides trips table
+        document.querySelector("h3").style.display = "none"; // hides "Your Bookings" heading
+        document.getElementById("bookingSection").style.display = "none"; // hides bookings
+        document.getElementById("userTop").style.opacity = 0;
+      }
+
       const tripForm = document.getElementById("tripForm");
       const tripTableBody = document.querySelector("#tripTable tbody");
       const bookingSection = document.getElementById("bookingSection");
@@ -203,12 +215,7 @@
           const resAll = await fetch("http://localhost:3000/api/trip/all");
           const allTrips = await resAll.json();
 
-          // Filter trips by user role (example: only show trips where user role === 'user')
-          const filteredTrips = allTrips.filter(
-            (trip) => trip.userId.role === "user"
-          );
-
-          renderAdminTrips(filteredTrips);
+          renderAdminTrips(allTrips);
         }
       }
 

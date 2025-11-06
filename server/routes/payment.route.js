@@ -52,4 +52,16 @@ router.get("/user/:userId", async (req, res) => {
   }
 });
 
+router.get("/all", async (req, res) => {
+  try {
+    const transactions = await PaymentSchema.find({}).sort({
+      createdAt: -1,
+    });
+    return res.json(transactions);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Failed to fetch transactions" });
+  }
+});
+
 export default router;

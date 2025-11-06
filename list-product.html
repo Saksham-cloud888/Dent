@@ -230,6 +230,10 @@
         window.location.href = "login.html"; // Replace with your login page
       }
 
+      if (user.role == "admin") {
+        document.querySelector(".cart-container").style.opacity = 0;
+      }
+
       const API_URL = "http://localhost:3000/api/product/getall"; // Get all products
       let products = [];
       let cart = [];
@@ -272,11 +276,6 @@
           return;
         }
 
-        // Only show update button if user is admin
-        if (user.role === "admin") {
-          actionButtons += `<button class="btn btn-info btn-sm ms-1" onclick="openUpdateModal('${product._id}')">Update</button>`;
-        }
-
         products.forEach((product) => {
           const tr = document.createElement("tr");
           tr.innerHTML = `
@@ -287,9 +286,15 @@
                 <td>रु${product.price}</td>
                 <td>${product.category}</td>
                 <td>
-                  <button class="btn btn-warning btn-sm" onclick="addToCart('${
-                    product._id
-                  }')">Add To Cart</button>
+                  ${
+                    user.role != "admin"
+                      ? `<button class="btn btn-warning btn-sm" onclick="addToCart('${product._id}')">Add To Cart</button>`
+                      : ""
+                  }
+                  ${
+                    user.role == "admin" &&
+                    `<button class="btn btn-info btn-sm ms-1" onclick="openUpdateModal('${product._id}')">Update</button>`
+                  }
                   ${
                     cart.find((item) => item._id === product._id)
                       ? '<span class="text-success fw-bold ms-2">In Cart</span>'
