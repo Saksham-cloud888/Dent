@@ -93,6 +93,7 @@
         <p><strong>Email:</strong> <span id="userEmail"></span></p>
         <p><strong>User ID:</strong> <span id="userId"></span></p>
         <p><strong>Role:</strong> <span id="role"></span></p>
+        <button class=".btn" onclick="logout()">Logout</button>
       </div>
 
       <!-- Payments Table -->
@@ -118,10 +119,19 @@
 
     <script>
       const user = JSON.parse(sessionStorage.getItem("user"));
+
+
       if (!user) {
         alert("Please login first!");
         window.location.href = "login.html";
       }
+
+      function logout() {
+        sessionStorage.removeItem("user");
+        alert("Logout Successful")
+        window.location.href = "index.html"        
+      }
+
 
       // Display user info
       document.getElementById("userName").textContent = user.name || "N/A";
