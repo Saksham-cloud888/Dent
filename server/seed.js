@@ -1,20 +1,15 @@
 import fs from "fs";
 import path from "path";
 import { ProductSchema } from "./models/product.model.js";
-import { connectDB } from "./lib/connection.js";
 import { UserSchema } from "./models/user.model.js";
-
-
-// Connect to DB
-connectDB();
 
 const seedProducts = async () => {
   try {
     // Check if products collection already has data
     const existingProducts = await ProductSchema.countDocuments();
     if (existingProducts > 0) {
-      console.log("Products already exist. Skipping seeding.");
-      process.exit();
+      console.log("✅ Products already exist. Skipping seeding.");
+      return;
     }
 
     // Read JSON file
@@ -24,10 +19,10 @@ const seedProducts = async () => {
 
     // Insert data into MongoDB
     await ProductSchema.insertMany(products);
-    console.log("Data Seeded Successfully!");
+    console.log("✅ Data Seeded Successfully!");
     process.exit();
   } catch (error) {
-    console.error("Error Seeding Data:", error);
+    console.error("❌ Error Seeding Data:", error);
     process.exit(1);
   }
 };
