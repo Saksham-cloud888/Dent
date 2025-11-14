@@ -115,6 +115,24 @@
           <!-- Payments will be injected here -->
         </tbody>
       </table>
+
+      <!-- Reviews Section -->
+      <h2 id="review-title" class="mt-5">User Reviews</h2>
+      <table id="review-table" class="table table-bordered table-hover bg-white" id="reviewTable">
+        <thead class="table-info">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Rating</th>
+            <th>Message</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- User reviews will be injected here -->
+        </tbody>
+      </table>
+
     </div>
 
     <script>
@@ -225,6 +243,52 @@
       }
 
       fetchPayments();
+
+      async function fetchReviews() {
+        try {
+          const response = await fetch("http://localhost:3000/api/review");
+          if (!response.ok) throw new Error("Failed to fetch reviews");
+        
+          const reviews = await response.json();
+          displayReviews(reviews);
+        } catch (err) {
+          console.error(err);
+          document.querySelector("#reviewTable tbody").innerHTML =
+            "<tr><td colspan='5'>Failed to load reviews.</td></tr>";
+        }
+      }
+
+      function displayReviews(reviews) {
+        const tbody = document.querySelector("#reviewTable tbody");
+        tbody.innerHTML = "";
+      
+        if (reviews.length === 0) {
+          tbody.innerHTML = "<tr><td colspan='5'>No Reviews Found</td></tr>";
+          return;
+        }
+        
+        reviews?.reviews?.forEach((review) => {
+          const tr = document.createElement("tr");
+
+          tr.innerHTML = `
+            <td>${review.name}</td>
+            <td>${review.email}</td>
+            <td>${review.rating} ⭐</td>
+            <td>${review.message}</td>
+            <td>${new Date(review.submittedAt).toLocaleString()}</td>
+          `;
+        
+          tbody.appendChild(tr);
+        });
+      }
+
+      // Run reviews fetch
+      if(user.role == "admin") {
+        fetchReviews();
+      } else {
+        document.getElementById("review-title").style.opacity = 0;
+        document.getElementById("review-table").style.opacity = 0;
+      }
     </script>
   </body>
 </html>
