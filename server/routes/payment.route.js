@@ -25,8 +25,9 @@ router.get("/success", async (req, res) => {
     verifiedAt: new Date(),
   });
 
-  const cleanId = booking_id.split("?")[0];
+
   if(booking_id) {
+    const cleanId = booking_id.split("?")[0];
     await BookingSchema.findByIdAndUpdate(
       cleanId,
       {
