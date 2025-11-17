@@ -5,10 +5,9 @@ import mongoose from "mongoose";
  */
 export const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb+srv://sakshampdl443_db_user:<db_password>@cluster0.rqdbgfy.mongodb.net/?appName=Cluster0", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(
+      "mongodb+srv://sakshampdl443_db_user:%3C%23Saksham%40123%3E@cluster0.rqdbgfy.mongodb.net/?appName=Cluster0"
+    );
     console.log("MongoDB Connected Successfully");
   } catch (error) {
     console.error("MongoDB Connection Error:", error.message);
