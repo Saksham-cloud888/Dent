@@ -5,7 +5,7 @@ import mongoose from "mongoose";
  */
 export const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/dent", {
+    await mongoose.connect("mongodb+srv://sakshampdl443_db_user:<db_password>@cluster0.rqdbgfy.mongodb.net/?appName=Cluster0", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
