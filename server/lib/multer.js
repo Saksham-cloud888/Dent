@@ -1,33 +1,21 @@
-import multer from "multer";
 import express from "express";
+import multer from "multer";
 
 const router = express.Router();
-
-// Set up storage engine
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./uploads"); // Save the uploaded files to the 'uploads' folder
-  },
+  destination: "uploads/",
   filename: (req, file, cb) => {
-    // Save the file with its original name
-    const originalName = file.originalname;
-    cb(null, originalName); // Use the original filename
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
 
-const uploader = multer({ storage: storage });
+const upload = multer({ storage });
 
-// File upload route
-router.post("/uploadfile", uploader.single("myfile"), (req, res) => {
-  if (req.file) {
-    // Return only the original filename (no modifications)
-    res.json({
-      message: "File uploaded successfully",
-      fileName: req.file.originalname,
-    });
-  } else {
-    res.status(400).json({ message: "No file uploaded" });
-  }
+router.post("/upload", upload.single("file"), (req, res) => {
+  res.json({
+    success: true,
+    fileUrl: `/uploads/${req.file.filename}`,
+  });
 });
 
 export default router;
